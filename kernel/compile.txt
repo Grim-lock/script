@@ -1,0 +1,29 @@
+安装在本机
+安装内核并更新启动项。
+
+$ sudo make install
+
+重启。
+
+$ sudo reboot
+
+重启完成后，查看是不是变成了新的内核。
+
+$ uname -r或者$ uname -a
+
+ 安装在另一台机器
+将生成的linux-3.18/.config复制到要替换的系统/boot下，并重命名为config-3.18；
+
+将生成的linux-3.18/arch/x86_64/boot/bzImage复制到要替换系统的/boot下，并重命名为vmlinuz-3.18；
+
+将生成的linux-3.18/System.map复制到要替换系统的/boot下，并重命名为System.map-3.18；
+
+将生成的/lib/modules/3.18.0复制到要替换的系统的/lib/modules下面，文件夹名是3.18；
+
+在要替换系统/lib/modules上执行$ sudo update-initramfs -c -k3.18；
+
+执行$ sudo update-grub2更新内核启动加载项。
+
+Tips：复制文件可以用scp命令，比如：
+
+$ scp -rp System.map  root@192.168.49.164:/boot/System.map-3.18
